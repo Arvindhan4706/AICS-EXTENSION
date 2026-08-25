@@ -5,6 +5,6 @@
       "destination": "/api/index"
     }
   ],
-  "outputDirectory": "apps/web/.next",
+  "outputDirectory": ".next",
   "framework": "nextjs"
 }
