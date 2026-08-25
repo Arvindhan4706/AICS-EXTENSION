@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CyberShield AI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="extension-container">
+    <div class="header">
+      <div class="logo-title">
+        <span class="shield-icon">🛡️</span>
+        <span class="brand">CyberShield <span class="ai-badge">AI</span></span>
+      </div>
+      <div class="status-dot online"></div>
+    </div>
+
+    <div class="scan-card">
+      <div class="url-label">CURRENT ACTIVE TAB</div>
+      <div class="current-url" id="active-url">Loading page...</div>
+      
+      <div class="threat-gauge">
+        <div class="gauge-circle" id="gauge-circle">
+          <span class="score-number" id="threat-score">--</span>
+          <span class="score-label">THREAT SCORE</span>
+        </div>
+      </div>
+
+      <div class="risk-badge-box">
+        <span class="risk-badge" id="risk-level">ANALYZING</span>
+      </div>
+    </div>
+
+    <div class="reasons-box">
+      <div class="reasons-title">Top XAI Risk Explanations</div>
+      <ul class="reasons-list" id="reasons-list">
+        <li>Checking page features...</li>
+      </ul>
+    </div>
+
+    <div class="settings-box" style="margin: 15px 20px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+      <span style="color: #94A3B8; font-size: 0.85rem; font-weight: bold;">STRICT MODE (Block Warn)</span>
+      <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 20px;">
+        <input type="checkbox" id="strict-mode-toggle" style="opacity: 0; width: 0; height: 0;">
+        <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 20px;"></span>
+      </label>
+    </div>
+
+    <div class="action-footer">
+      <button class="btn-primary" id="open-dashboard-btn">Open AI Dashboard</button>
+      <button class="btn-secondary" id="rescan-btn">Re-Scan Page</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

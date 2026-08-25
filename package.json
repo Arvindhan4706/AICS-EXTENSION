@@ -1,0 +1,13 @@
+{
+  "name": "cybershield-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CyberShield AI Monorepo Workspace",
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev",
+    "dev:all": "npx concurrently \"npm run dev\" \"npm run backend\"",
+    "build": "npm --prefix apps/web run build",
+    "backend": "uvicorn main:app --reload --port 8001 --app-dir apps/backend",
+    "test:ml": "python -m apps.ml_engine.predict"
+  }
+}

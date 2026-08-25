@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "CyberShield AI - Real-Time Phishing & Threat Protection",
+  "version": "1.0.0",
+  "description": "AI-powered real-time phishing URL detection, fake website blocking, and explainable threat analysis.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

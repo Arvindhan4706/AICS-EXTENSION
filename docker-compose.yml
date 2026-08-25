@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=production-cyber-shield-key-2026
+      - DATABASE_URL=sqlite:////app/cybershield.db
+      - VT_API_KEY=${VT_API_KEY:-}
+      - GSB_API_KEY=${GSB_API_KEY:-}
+    volumes:
+      - ./cybershield.db:/app/cybershield.db
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - backend
+    restart: always

@@ -1,0 +1,7 @@
+.next
+node_modules
+apps/web/node_modules
+apps/web/.next
+apps/backend/__pycache__
+apps/ml_engine/__pycache__
+cybershield.db
