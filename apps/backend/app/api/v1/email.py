@@ -28,9 +28,17 @@ async def scan_url_sync(url: str):
         prediction = ensemble.predict(features)
         risk_engine = RiskEngine()
         risk_assessment = risk_engine.calculate_risk(prediction, analysis_results.get("analysis", {}))
-        return {'threat_score': risk_assessment.get('risk_score', 15), 'risk_level': risk_assessment.get('risk_level', 'LOW')}
+        return {
+            'url': url,
+            'threat_score': risk_assessment.get('risk_score', 15),
+            'risk_level': risk_assessment.get('risk_level', 'LOW')
+        }
     except Exception:
-        return {'threat_score': 15, 'risk_level': 'LOW'}
+        return {
+            'url': url,
+            'threat_score': 15,
+            'risk_level': 'LOW'
+        }
 
 @router.post("/scan-eml")
 async def scan_eml_file(file: UploadFile = File(...), db: Session = Depends(get_db)):

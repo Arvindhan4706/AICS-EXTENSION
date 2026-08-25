@@ -7,7 +7,7 @@ export default function ReportsPage() {
   const [scans, setScans] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1'}/scan/history`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api/v1'}/scan/history`)
       .then((res) => res.json())
       .then((data) => setScans(data))
       .catch((err) => console.error(err));

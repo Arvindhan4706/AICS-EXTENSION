@@ -42,31 +42,35 @@ export default function RealTimeScannerPage() {
       }
 
       if (data && data.status === 'completed') {
-        // Map the new API response to the old UI mock schema so the JSX renders correctly
+        // Map API response from backend to UI model
         const mappedResult = {
-          threat_score: data.verdict?.risk_score || 0,
+          threat_score: data.verdict?.risk_score ?? 0,
           risk_level: data.verdict?.risk_level || "UNKNOWN",
           category: data.verdict?.classification || "UNKNOWN",
-          probability: (data.verdict?.risk_score || 0) / 100, // Roughly estimate probability
+          probability: data.ml?.confidence ?? ((data.verdict?.risk_score || 0) / 100),
           threat_intelligence: {
             virustotal: data.analysis?.virustotal || { status: "CLEAN", positives: 0 }
           },
           explainable_ai: {
             reasons: (data.explanations || []).map((exp: any) => ({
-              title: exp.feature.replace('_', ' ').toUpperCase(),
-              contribution_percentage: `${(exp.importance * 100).toFixed(1)}%`,
-              description: exp.description
+              title: exp.feature ? exp.feature.replace('_', ' ').toUpperCase() : "HEURISTIC",
+              contribution_percentage: `${((exp.importance ?? 0) * 100).toFixed(1)}%`,
+              description: exp.description || "Risk indicator evaluated."
             })),
-            mitre_attack: ["T1566.002", "T1204.001"],
-            owasp_top10: ["A03:2021-Injection"],
-            recommendations: ["Block URL at DNS level", "Invalidate exposed credentials"]
+            mitre_attack: data.mitre_mappings || ["M1021 - Network Intrusion Prevention"],
+            owasp_top10: data.owasp_mappings || ["A00:2021 - Compliant Baseline"],
+            recommendations: data.recommendations || ["Proceed under standard security policies."]
           },
-          model_breakdown: {
+          model_breakdown: data.ml?.model_breakdown ? {
+            xgboost_prob: data.ml.model_breakdown.xgboost ?? 0.5,
+            random_forest_prob: data.ml.model_breakdown.random_forest ?? 0.5,
+            ensemble_prob: data.ml.model_breakdown.ensemble ?? 0.5
+          } : {
             xgboost_prob: (data.verdict?.risk_score || 0) / 100,
             random_forest_prob: (data.verdict?.risk_score || 0) / 100,
-            svm_prob: 0.5
+            ensemble_prob: (data.verdict?.risk_score || 0) / 100
           },
-          features_extracted: data.features || {}
+          features_extracted: data.features || data.analysis?.url || {}
         };
         
         setResult(mappedResult);

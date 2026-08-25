@@ -10,7 +10,7 @@ export default function ThreatFeedPage() {
   const fetchFeed = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1'}/threat-intel/feed`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api/v1'}/threat-intel/feed`);
       const data = await res.json();
       setFeed(data);
     } catch (err) {

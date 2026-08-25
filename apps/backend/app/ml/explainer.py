@@ -7,7 +7,7 @@ class SHAPExplainer:
         xgb_path = os.path.join(models_dir, 'xgb_model.joblib')
         
         self.xgb_model = None
-        self.feature_names = ['url_length', 'hostname_length', 'subdomain_count', 'has_ip', 'entropy', 'keyword_count']
+        self.feature_names = ['subdomain_count', 'has_ip', 'entropy', 'keyword_count']
         
         if os.path.exists(xgb_path):
             self.xgb_model = joblib.load(xgb_path)

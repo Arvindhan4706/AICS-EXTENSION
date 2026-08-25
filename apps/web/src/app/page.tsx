@@ -42,9 +42,15 @@ export default function SaaSProductLandingPage() {
 
       if (data && data.status === 'completed') {
         const mappedResult = {
-          threat_score: data.risk_score || 0,
-          risk_level: data.risk_level || "UNKNOWN",
-          category: data.verdict || "UNKNOWN"
+          threat_score: data.verdict?.risk_score ?? data.risk_score ?? 0,
+          risk_level: data.verdict?.risk_level || "UNKNOWN",
+          category: data.verdict?.classification || "UNKNOWN",
+          explainable_ai: {
+            reasons: (data.explanations || []).map((exp: any) => ({
+              title: exp.feature ? exp.feature.replace('_', ' ').toUpperCase() : "HEURISTIC",
+              description: exp.description || "Vector analyzed."
+            }))
+          }
         };
         setDemoResult(mappedResult);
       }
@@ -69,7 +75,7 @@ export default function SaaSProductLandingPage() {
         </h1>
 
         <p className="text-sm text-cyber-muted max-w-2xl leading-relaxed uppercase tracking-widest border-l-2 border-cyber-accent pl-4">
-          Initiate ML Ensembles. Extract 40+ vectors in real-time. Deploy SHAP XAI overrides. Secure sector via Manifest V3 protocol. T-Minus 5 minutes to total integration.
+          Initiate ML Ensembles. Extract real-time structural invariant vectors. Deploy SHAP XAI overrides. Secure sector via Manifest V3 protocol.
         </p>
 
         <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -96,7 +102,7 @@ export default function SaaSProductLandingPage() {
                 <span className="w-2 h-2 bg-cyber-accent animate-ping"></span>
                 LIVE_SCAN_TERMINAL
               </span>
-              <span>SYS_PRECISION: 98.2%</span>
+              <span>SYS_STATUS: ONLINE</span>
             </div>
 
             <form onSubmit={runQuickDemo} className="flex flex-col md:flex-row gap-2">
@@ -128,7 +134,9 @@ export default function SaaSProductLandingPage() {
                   </span>
                 </div>
                 <div className="text-cyber-muted">VECTOR: <span className="text-white">{demoResult.category}</span></div>
-                <div className="text-cyber-muted">XAI_OUTPUT: <span className="text-cyber-warning">{demoResult.explainable_ai.reasons[0]?.title} - {demoResult.explainable_ai.reasons[0]?.description}</span></div>
+                {demoResult.explainable_ai?.reasons?.[0] && (
+                  <div className="text-cyber-muted">XAI_OUTPUT: <span className="text-cyber-warning">{demoResult.explainable_ai.reasons[0].title} - {demoResult.explainable_ai.reasons[0].description}</span></div>
+                )}
               </div>
             )}
           </div>

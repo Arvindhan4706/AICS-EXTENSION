@@ -11,7 +11,7 @@ export default function AdminPage() {
   const triggerRetraining = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1'}/admin/retrain-models`, { method: "POST" });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api/v1'}/admin/retrain-models`, { method: "POST" });
       const data = await res.json();
       alert(data.message || "Model retraining initiated!");
     } catch (err) {
@@ -26,7 +26,7 @@ export default function AdminPage() {
     e.preventDefault();
     if (!ruleEntry) return;
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001/api/v1'}/admin/rules`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api/v1'}/admin/rules`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ entry: ruleEntry, list_type: "BLACKLIST" })

@@ -36,11 +36,12 @@ export default function QRScannerPage() {
         const mappedResult = {
           extracted_target_url: targetUrl,
           quishing_threat_analysis: {
-            threat_score: data.risk_score || 0,
+            threat_score: data.verdict?.risk_score ?? data.risk_score ?? 0,
+            risk_level: data.verdict?.risk_level || "UNKNOWN",
             explainable_ai: {
               reasons: (data.explanations || []).map((exp: any) => ({
-                title: exp.feature.replace('_', ' ').toUpperCase(),
-                description: exp.description
+                title: exp.feature ? exp.feature.replace('_', ' ').toUpperCase() : "HEURISTIC",
+                description: exp.description || "QR embedded URL vector evaluated."
               }))
             }
           }
